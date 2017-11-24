@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="padding_camera_layout">18dp</dimen>
+    <dimen name="dimen_camera_icon">42dp</dimen>
+</resources>
