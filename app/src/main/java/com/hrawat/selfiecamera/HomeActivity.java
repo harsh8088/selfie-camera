@@ -12,15 +12,8 @@ import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.JavaCameraView;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
-import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.opencv.imgproc.Imgproc.THRESH_BINARY;
 
 public class HomeActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
 
@@ -69,11 +62,15 @@ public class HomeActivity extends AppCompatActivity implements CameraBridgeViewB
             @Override
             public void onClick(View v) {
                 if (isFrontCamera) {
+                    javaCameraView.disableView();
                     javaCameraView.setCameraIndex(CameraBridgeViewBase.CAMERA_ID_BACK);
                     isFrontCamera = false;
+                    javaCameraView.enableView();
                 } else {
+                    javaCameraView.disableView();
                     javaCameraView.setCameraIndex(CameraBridgeViewBase.CAMERA_ID_FRONT);
                     isFrontCamera = true;
+                    javaCameraView.enableView();
                 }
             }
         });
@@ -117,17 +114,17 @@ public class HomeActivity extends AppCompatActivity implements CameraBridgeViewB
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
         mRgba = inputFrame.rgba();
 //        Mat src = imread("0.jpg", 1);
-        Mat dst = new Mat();//(src.rows,src.cols,CV_8UC4);
-        Mat tmp = new Mat();
-        Mat alpha = new Mat();
-        Imgproc.cvtColor(mRgba, tmp, Imgproc.COLOR_RGB2BGRA);
-        Imgproc.threshold(tmp, alpha, 100, 255, THRESH_BINARY);
-        List<Mat> rgb = new ArrayList<>();
-        Core.split(mRgba, rgb);
-        rgb.add(alpha);
-//        Mat[] rgba=new Mat()[rgb[0],rgb[1],rgb[2],alpha];
-        Core.merge(rgb, dst);
+//        Mat dst = new Mat();//(src.rows,src.cols,CV_8UC4);
+//        Mat tmp = new Mat();
+//        Mat alpha = new Mat();
+//        Imgproc.cvtColor(mRgba, tmp, Imgproc.COLOR_RGB2BGRA);
+//        Imgproc.threshold(tmp, alpha, 100, 255, THRESH_BINARY);
+//        List<Mat> rgb = new ArrayList<>();
+//        Core.split(mRgba, rgb);
+//        rgb.add(alpha);
+////        Mat[] rgba=new Mat()[rgb[0],rgb[1],rgb[2],alpha];
+//        Core.merge(rgb, dst);
 //        imwrite("dst.png", dst);
-        return dst;
+        return mRgba;
     }
 }
